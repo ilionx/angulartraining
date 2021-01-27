@@ -1,7 +1,7 @@
 import {HttpResponse} from '@angular/common/http';
 import {Subject} from 'rxjs';
 
-describe('RxJS Operators', () => {
+describe('Eenvoudige RxJS Operators', () => {
 
   const httpResponse = new Subject<HttpResponse<any>>();
   const okResponse = {status: 200, body: 'the text in the body'} as HttpResponse<any>;
