@@ -1,13 +1,13 @@
 import {HttpResponse} from '@angular/common/http';
 import {Subject} from 'rxjs';
 
-describe('Eenvoudige RxJS Operators', () => {
+describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
 
   const httpResponse = new Subject<HttpResponse<any>>();
   const okResponse = {status: 200, body: 'the text in the body'} as HttpResponse<any>;
   const errorResponse = {status: 404} as HttpResponse<any>;
 
-  it('map operator', (done) => {
+  it('Opdracht 1 - map operator', (done) => {
 
     // httpResponse is een Observable die het gehele HttpResponse-object bevat.
     // Pas er een de map-operator op toe, zodat je een Observable krijgt die alleen de body van het HttpResponse-object terugkrijgt.
@@ -23,7 +23,7 @@ describe('Eenvoudige RxJS Operators', () => {
     sendResponse(okResponse);
   });
 
-  it('pluck operator', (done) => {
+  it('Opdracht 2 - pluck operator', (done) => {
 
     // Kun je met de pluck operator hetzelfde als je hierboven deed met de map operator?
 
@@ -38,7 +38,7 @@ describe('Eenvoudige RxJS Operators', () => {
     sendResponse(okResponse);
   });
 
-  it('tap operator', (done) => {
+  it('Opdracht 3 - tap operator', (done) => {
 
     // Met de tap-operator kun je side effects veroorzaken. De code binnen de tap-operator wordt wel uitgevoerd, maar verandert niets aan
     // de Observable zelf. Breid het voorgaande voorbeeld uit: gebruik de tap operator om iets in de console.log te zetten zodra je een
@@ -56,7 +56,7 @@ describe('Eenvoudige RxJS Operators', () => {
     sendResponse(okResponse);
   });
 
-  it('filter operator', (done) => {
+  it('Opdracht 4 - filter operator', (done) => {
 
     // Hoe zorg je er - met behulp van de filter operator - voor dat alleen een http-response met status 200 terugkomt? En een
     // error response met status 404 dus niet?
@@ -72,10 +72,10 @@ describe('Eenvoudige RxJS Operators', () => {
     sendResponse(errorResponse);
   });
 
-  it('een fout gooien', () => {
+  it('Opdracht 5 - een fout gooien', () => {
 
     // Het inslikken van fouten is misschien niet zo'n goed idee. Kun je ervoor zorgen dat een http status ongelijk aan 200 wordt
-    // doorgegeven als een (throw) new Error(), maar van een bericht een correcte http status de body wordt doorgegeven?
+    // doorgegeven als een (throw) new Error(), maar van een bericht met een correcte http status de body wordt doorgegeven?
 
     // ... Typ hier je code ...
     const solution = null;
@@ -95,7 +95,7 @@ describe('Eenvoudige RxJS Operators', () => {
     httpResponse.complete();
   });
 
-  it('een fout afvangen (1)', () => {
+  it('Opdracht 6 - een fout afvangen (1)', () => {
 
     // Stel dat je naar een Observable luistert die een Error gooit. Er zijn twee manieren om die fout af te vangen. De eerste is via de
     // subscribe-methode. Pas deze methode toe om een console.error aan te roepen. Subscribe hieronder op de httpResponse.
@@ -109,7 +109,7 @@ describe('Eenvoudige RxJS Operators', () => {
     httpResponse.complete();
   });
 
-  it('een fout afvangen (2)', () => {
+  it('Opdracht 7 - een fout afvangen (2)', () => {
 
     // De tweede manier om fouten af te vangen, is door middel van de catchError operator. In onderstaande voorbeeld ga je de map-operator
     // toepassen, om de body van httpResponse terug te geven. Maar als er een fout optreedt, vang je de fout af, en geeft je in plaats
@@ -129,7 +129,7 @@ describe('Eenvoudige RxJS Operators', () => {
     httpResponse.complete();
   });
 
-  it('extra opdracht, takeUntil', () => {
+  it('Opdracht 8 - extra opdracht, takeUntil', () => {
 
     // Met take(n) kun je ervoor zorgen dat een Observable na een bepaald aantal emissions vanzelf complete. Je hoeft dan niet meer te
     // unsubscriben. Er is ook een obs1.takeUntil(obs2) operator, die obs1 automatisch laat completen, zodra obs2 een waarde emit.
@@ -137,7 +137,7 @@ describe('Eenvoudige RxJS Operators', () => {
     // formControl.valueChanges). Maak een Observable met de naam "destroy" die in de ngOnDestroy() een waarde emit. Zorg er met behulp
     // van takeUntil voor dat je automatisch stopt met luisteren naar formControl.valueChanges, zonder unsubscribe te gebruiken.
 
-  })
+  });
 
   beforeEach(() => {
     // Test setup (kun je negeren):
