@@ -92,6 +92,13 @@ describe('FlatMap', () => {
     expect(refreshCalls).toBe(1);
   });
 
+  it('extra opdracht', () => {
+
+    // Als bij iedere toetsaanslag van de gebruiker een nieuwe zoekopdracht gedaan wordt, dan kost dat veel http-verkeer. Beter is het
+    // om een seconde te wachten, totdat de gebruiker klaar is met typen. Zoek uit welke RxJS-operator je hiervoor kunt gebruiken, en
+    // maak een invoerveld met zo'n vertraagde emit.
+
+  });
 
   function searchRequest(searchTerm: string): Observable<string> {
     console.log(`Versturen van request voor zoekterm ${searchTerm}`);
