@@ -129,6 +129,16 @@ describe('Eenvoudige RxJS Operators', () => {
     httpResponse.complete();
   });
 
+  it('extra opdracht, takeUntil', () => {
+
+    // Met take(n) kun je ervoor zorgen dat een Observable na een bepaald aantal emissions vanzelf complete. Je hoeft dan niet meer te
+    // unsubscriben. Er is ook een obs1.takeUntil(obs2) operator, die obs1 automatisch laat completen, zodra obs2 een waarde emit.
+    // Schrijf een Angular-component die luistert naar een Observable die niet uit zichzelf complete (bijvoorbeeld een
+    // formControl.valueChanges). Maak een Observable met de naam "destroy" die in de ngOnDestroy() een waarde emit. Zorg er met behulp
+    // van takeUntil voor dat je automatisch stopt met luisteren naar formControl.valueChanges, zonder unsubscribe te gebruiken.
+
+  })
+
   beforeEach(() => {
     // Test setup (kun je negeren):
     jest.spyOn(global.console, 'log');
