@@ -1,18 +1,21 @@
 import {HttpResponse} from '@angular/common/http';
-import {Subject} from 'rxjs';
+import {HttpClientMock} from './mocks/http-mock';
 
 describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
 
-  const httpResponse = new Subject<HttpResponse<any>>();
   const okResponse = {status: 200, body: 'the text in the body'} as HttpResponse<any>;
   const errorResponse = {status: 404} as HttpResponse<any>;
 
+  const httpClientMock = new HttpClientMock();
+
   it('Opdracht 1 - map operator', (done) => {
 
-    // httpResponse is een Observable die het gehele HttpResponse-object bevat.
+    // We hebben een httpClientMock gemaakt met een methode observeResponse(). observeResponse() geeft een Observable terug, waar je
+    // operators op kunt toepassen, net als op het echte resultaat uit een echte http client.
     // Pas er een de map-operator op toe, zodat je een Observable krijgt die alleen de body van het HttpResponse-object terugkrijgt.
 
     // ... Typ hier je code ...
+    // hint: const solution = httpClientMock.observeResponse().pipe( ... );
     const solution = null;
 
     // Test:
@@ -20,7 +23,7 @@ describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
       expect(value).toBe('the text in the body');
       done();
     });
-    sendResponse(okResponse);
+    httpClientMock.sendResponse(okResponse);
   });
 
   it('Opdracht 2 - pluck operator', (done) => {
@@ -35,7 +38,7 @@ describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
       expect(value).toBe('the text in the body');
       done();
     });
-    sendResponse(okResponse);
+    httpClientMock.sendResponse(okResponse);
   });
 
   it('Opdracht 3 - tap operator', (done) => {
@@ -53,7 +56,7 @@ describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
       expect(console.log).toHaveBeenCalled();
       done();
     });
-    sendResponse(okResponse);
+    httpClientMock.sendResponse(okResponse);
   });
 
   it('Opdracht 4 - filter operator', (done) => {
@@ -66,10 +69,13 @@ describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
 
     // Test
     solution.subscribe(
+      // NB: subscribe krijgt drie argumenten. Het eerste is een callback voor een succesvolle emit. Dit zou niet aangeroepen moeten worden.
       () => fail('solution should not emit a value'),
+      // De tweede is een callback voor een succesvolle complete. Die zou ook niet aangeroepen moeten worden.
       () => fail('solution should not emit an error'),
+      // De derde is een callback voor wanneer de Observable in een foutsituatie eindigt. Als deze is aangeroepen slaagt de test.
       () => done());
-    sendResponse(errorResponse);
+    httpClientMock.sendResponse(errorResponse);
   });
 
   it('Opdracht 5 - een fout gooien', () => {
@@ -87,26 +93,28 @@ describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
       res => result = res,
       err => error = err
     );
-    httpResponse.next(okResponse);
+    // We spelen hier een beetje vals en laten hier de http client twee keer een response terugsturen. Dat kan met een echte http request
+    // natuurlijk niet, maar is wel handig om zowel een okResponse als een errorResponse in één keer te testen.
+    httpClientMock.sendResponseWithoutCompleting(okResponse);
     expect(result).toEqual('the text in the body');
     expect(error).toBeFalsy();
-    httpResponse.next(errorResponse);
+    httpClientMock.sendResponseWithoutCompleting(errorResponse);
     expect(error).toBeTruthy();
-    httpResponse.complete();
+    httpClientMock.complete();
   });
 
   it('Opdracht 6 - een fout afvangen (1)', () => {
 
     // Stel dat je naar een Observable luistert die een Error gooit. Er zijn twee manieren om die fout af te vangen. De eerste is via de
-    // subscribe-methode. Pas deze methode toe om een console.error aan te roepen. Subscribe hieronder op de httpResponse.
+    // subscribe-methode. Pas deze methode toe om een console.error aan te roepen. Subscribe hieronder op de observeResponse() van de
+    // httpClientMock.
 
     // ... Typ hier je code ...
 
 
     // Test
-    httpResponse.error(new Error('an error occurred'));
+    httpClientMock.sendError(new Error('an error occurred'));
     expect(console.error).toHaveBeenCalled();
-    httpResponse.complete();
   });
 
   it('Opdracht 7 - een fout afvangen (2)', () => {
@@ -121,12 +129,12 @@ describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
 
     // Test
     let result = null;
+    // Ook hier spelen we een beetje vals, door de mock van de http client twee keer een respons te laten terugsturen.
     solution.subscribe(res => result = res);
-    httpResponse.next(okResponse);
+    httpClientMock.sendResponseWithoutCompleting(okResponse);
     expect(result).toBe('the text in the body');
-    httpResponse.error(new Error());
+    httpClientMock.sendError(new Error());
     expect(result).toBe('FOUT');
-    httpResponse.complete();
   });
 
   it('Opdracht 8 - extra opdracht, takeUntil', () => {
@@ -137,6 +145,8 @@ describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
     // formControl.valueChanges). Maak een Observable met de naam "destroy" die in de ngOnDestroy() een waarde emit. Zorg er met behulp
     // van takeUntil voor dat je automatisch stopt met luisteren naar formControl.valueChanges, zonder unsubscribe te gebruiken.
 
+    // NB: deze opdracht maak je dus in een afzonderlijke component en niet binnen deze test zelf. Deze test hoef je niet te laten slagen.
+
   });
 
   beforeEach(() => {
@@ -144,9 +154,4 @@ describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
     jest.spyOn(global.console, 'log');
     jest.spyOn(global.console, 'error');
   });
-
-  function sendResponse(response): void {
-    httpResponse.next(response);
-    httpResponse.complete();
-  }
 });

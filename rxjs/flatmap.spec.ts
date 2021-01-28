@@ -8,7 +8,7 @@ describe('FlatMap', () => {
   const requests: string[] = [];
   let refreshCalls = 0;
 
-  it('mergeMap operator (1)', () => {
+  it('Opdracht 1 - mergeMap operator (1)', () => {
 
     // Stel je hebt een applicatie met een zoekveld. Iedere keer dat de gebruiker een nieuwe waarde in het zoekveld type, dan emit de
     // searchEvents-Observable de nieuwe zoekterm. Maak een Observable die bij iedere nieuwe zoekterm de functie 'searchRequest(zoekterm)'
@@ -16,6 +16,7 @@ describe('FlatMap', () => {
     // de uiteindelijke waarde is die jouw solution-Observable emit.
 
     // ... Typ hier je code ...
+    // hint: const solution = searchEvents.pipe(...)
     const solution = null;
 
     // Test:
@@ -29,7 +30,7 @@ describe('FlatMap', () => {
     expect(result).toBe('Resultaat voor tweede');
   });
 
-  it('mergeMap operator (2)', () => {
+  it('Opdracht 2 - mergeMap operator (2)', () => {
 
     // De mergeMap-operator geeft zoekresultaten terug in de volgorde waarin ze toevallig binnenkomen. Http-verkeer is asynchroon. Als een
     // gebruiker twee zoekopdrachten kort na elkaar invoert, kan het dus gebeuren dat de zoekresultaten in omgekeerde volgorde binnenkomen.
@@ -49,7 +50,7 @@ describe('FlatMap', () => {
     expect(result).toBe('Resultaat voor oudere zoekopdracht');
   });
 
-  it('switchMap operator', () => {
+  it('Opdracht 3 - switchMap operator', () => {
 
     // De switchMap-operator behoudt de volgorde van de zoekopdrachten. Zodra een nieuwe zoekopdracht wordt gedaan, wordt de oude meteen
     // geannuleerd, en wordt meteen "geswitcht" naar de nieuwe. Het resultaat van de oude zoekopdracht komt niet eens meer binnen. Probeer
@@ -69,17 +70,18 @@ describe('FlatMap', () => {
     expect(result).toBe('Resultaat voor nieuwere zoekopdracht');
   });
 
-  it('exhaustMap operator', () => {
+  it('Opdracht 4 - exhaustMap operator', () => {
 
     // Stel dat we nu niet te maken hebben met een zoekveld, maar met een refresh-knop. Iedere keer dat de gebruiker op de refresh-knop
     // drukt, wordt de pagina ververst. Maar de gebruiker is erg ongeduldig, dus de gebruiker drukt al op refresh, terwijl het vorige
-    // request nog niet binnen is. Wat kunnen we doen om zinloze http-calls te voorkomen, en de gebruiker te laten wachten totdat er
-    // iets binnenkomt?
+    // request nog niet binnen is. Wat kunnen we doen om zinloze http-calls te voorkomen, en geen nieuwe calls uit te voeren zolang de
+    // lopende call nog niet binnen is? Daarmee negeren we dus refresh-indrukken van de gebruiker totdat we een eerste resultaat hebben.
 
     // Pas operators toe op de refreshEvents-operator om deze opdracht te maken. Geef het resultaat van de refresh()-methode
     // (een Observable) terug als waarde.
 
     // ... Typ hier je code ...
+    // hint: solution = refreshEvents.pipe(...)
     const solution = null;
 
     // Test:
@@ -92,11 +94,13 @@ describe('FlatMap', () => {
     expect(refreshCalls).toBe(1);
   });
 
-  it('extra opdracht', () => {
+  it('Opdracht 5 - extra opdracht', () => {
 
     // Als bij iedere toetsaanslag van de gebruiker een nieuwe zoekopdracht gedaan wordt, dan kost dat veel http-verkeer. Beter is het
     // om een seconde te wachten, totdat de gebruiker klaar is met typen. Zoek uit welke RxJS-operator je hiervoor kunt gebruiken, en
     // maak een invoerveld met zo'n vertraagde emit.
+
+    // NB: deze opdracht maak je dus in een afzonderlijke component en niet binnen deze test zelf. Deze test hoef je niet te laten slagen.
 
   });
 

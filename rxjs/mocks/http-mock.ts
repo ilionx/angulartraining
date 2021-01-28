@@ -19,4 +19,16 @@ export class HttpClientMock {
     this.responseObject.next(response);
     this.responseObject.complete();
   }
+
+  sendError(error: any): void {
+    this.responseObject.error(error);
+  }
+
+  sendResponseWithoutCompleting(response: HttpResponse<any>): void {
+    this.responseObject.next(response);
+  }
+
+  complete(): void {
+    this.responseObject.complete();
+  }
 }
