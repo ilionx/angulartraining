@@ -24,7 +24,7 @@ describe('Onderwerp 2 - Subject', () => {
     expect(evenNumbers).toEqual([2, 4]);
   });
 
-  it('Opdracht 2 - ReplaySubject', done => {
+  it('Opdracht 2 - ReplaySubject', () => {
 
     const fibonacci: ReplaySubject<number> = new ReplaySubject<number>();
 
