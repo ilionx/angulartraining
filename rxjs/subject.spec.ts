@@ -24,7 +24,7 @@ describe('Onderwerp 2 - Subject', () => {
     expect(evenNumbers).toEqual([2, 4]);
   });
 
-  it('Opdracht 2 - ReplaySubject', () => {
+  it('Opdracht 2 - ReplaySubject', done => {
 
     const fibonacci: ReplaySubject<number> = new ReplaySubject<number>();
 
@@ -39,6 +39,7 @@ describe('Onderwerp 2 - Subject', () => {
       //      https://rxjs-dev.firebaseapp.com/api/index/class/ReplaySubject
       //      https://rxjs-dev.firebaseapp.com/api/operators/last
       expect(latestFibonacci).toBe(34);
+      done();
     });
   });
 });
