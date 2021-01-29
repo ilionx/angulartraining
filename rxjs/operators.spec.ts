@@ -6,7 +6,7 @@ describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
   const okResponse = {status: 200, body: 'the text in the body'} as HttpResponse<any>;
   const errorResponse = {status: 404} as HttpResponse<any>;
 
-  const httpClientMock = new HttpClientMock();
+  let httpClientMock = new HttpClientMock();
 
   it('Opdracht 1 - map operator', (done) => {
 
@@ -151,6 +151,7 @@ describe('Onderwerp 1 - Eenvoudige RxJS Operators', () => {
 
   beforeEach(() => {
     // Test setup (kun je negeren):
+    httpClientMock = new HttpClientMock();
     jest.spyOn(global.console, 'log');
     jest.spyOn(global.console, 'error');
   });
