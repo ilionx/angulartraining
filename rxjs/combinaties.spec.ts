@@ -1,15 +1,13 @@
-import {forkJoin, Observable, ReplaySubject, Subject} from 'rxjs';
-import {filter, pluck} from 'rxjs/operators';
-import {HttpClient} from '@angular/common/http';
-import {HttpClientMock} from './mocks/http-mock';
+import {Subject} from 'rxjs';
 import {TransportationService} from './mocks/transportation-service';
 
 describe('Onderwerp 4 - Combinaties van streams', () => {
 
   const transportationService = new TransportationService();
-  const formValueChange = new Subject<any>();
-  const formValidityChange = new Subject<'valid' | 'invalid'>();
-  const saveFormValue = new Subject();
+  const databaseRunning = new Subject<boolean>();
+  const backendRunning = new Subject<boolean>();
+  const frontendRunning = new Subject<boolean>();
+  const completeApplicationRunning = new Subject();
 
   it('Opdracht 1 - forkJoin', done => {
     const departureTime = '08:55';
@@ -30,22 +28,26 @@ describe('Onderwerp 4 - Combinaties van streams', () => {
 
   it('Opdracht 2 - combineLatest', done => {
 
-    // Zorg er voor dat elke valide form change wordt opgeslagen.
-    // ...subscribe(value => saveFormValue.next(value))
+    // We hebben drie observables databaseRunning, backendRunning en frontendRunning die de status van een applicatie monitoren.
+    // We zijn geinteresseerd of de gehele applicatie (dus alle drie de onderdelen) draaien.
+    // Zorg ervoor dat elke wijziging in één van de drie observables wordt opgevangen en de status van de gehele applicatie
+    // wordt opgeslagen.
+    // ...subscribe(value => completeApplicationRunning.next(value))
+
+    // extra vraag: hoe kun je ervoor zorgen dat alleen een waarde ge-emit wordt als de nieuwe waarde verschilt van de vorige?
 
     // TEST:
     let valuesReceived = [];
-    saveFormValue.subscribe(value => valuesReceived = [...valuesReceived, value]);
+    completeApplicationRunning.subscribe(value => valuesReceived = [...valuesReceived, value]);
 
-    formValidityChange.next('valid');
-    formValueChange.next(33);
-    formValueChange.next(34);
-    formValidityChange.next('invalid');
-    formValueChange.next(35);
-    formValidityChange.next('valid');
-    formValueChange.next(36);
-
-    expect(valuesReceived).toEqual([33, 34, 36]);
+    databaseRunning.next(true);
+    backendRunning.next(true);
+    frontendRunning.next(true);
+    databaseRunning.next(false);
+    backendRunning.next(false);
+    databaseRunning.next(true);
+    backendRunning.next(true);
+    expect(valuesReceived).toEqual([true, false, false, false, true]);
     done();
   });
 
