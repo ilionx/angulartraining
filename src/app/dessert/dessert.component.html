@@ -1,0 +1,10 @@
+<p>Als hoofdgerecht heb je gekozen: {{ selectedMainDish?.name }} </p>
+
+<h1>Stap 2/2: Kies je nagerecht:</h1>
+
+<app-dish-form [dishes]="desserts | async" (selectedDishChange)="onSelectedDishChange($event)">
+</app-dish-form>
+
+<ng-container *ngIf="selectedDessert">
+  Het totaalbedrag van je bestelling komt op {{ totalPrice }}
+</ng-container>

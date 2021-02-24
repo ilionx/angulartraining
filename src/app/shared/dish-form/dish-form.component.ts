@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnDestroy, Output} from '@angular/core';
 import {FormControl} from '@angular/forms';
-import {Dish} from '../../shared/model/dish';
+import {Dish} from '../model/dish';
 import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 
