@@ -1,0 +1,10 @@
+<form>
+  <ul>
+    <li *ngFor="let dish of dishes">
+      <label>
+        <input type="radio" [formControl]="dishControl" [value]="dish">
+        {{ dish.name }}
+      </label>
+    </li>
+  </ul>
+</form>

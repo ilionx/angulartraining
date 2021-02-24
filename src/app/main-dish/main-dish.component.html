@@ -1,0 +1,8 @@
+<h1>Stap 1/2: Kies je hoofdgerecht:</h1>
+
+<app-dish-form [dishes]="dishes | async" (selectedDishChange)="onSelectedDishChange($event)"></app-dish-form>
+
+<ng-container *ngIf="selectedMainDish">
+  <p>Je hebt gekozen voor: {{ selectedMainDish.name }}</p>
+  <p>Totaalprijs: {{selectedMainDish.price}} </p>
+</ng-container>
