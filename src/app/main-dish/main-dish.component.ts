@@ -1,8 +1,9 @@
-import {Component, EventEmitter, Output} from '@angular/core';
-import {DishService} from '../shared/service/dish.service';
+import {Component} from '@angular/core';
 import {Dish} from '../shared/model/dish';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
+import {WizardService} from '../shared/service/wizard.service';
+import {CachedDishService} from '../shared/service/cached-dish.service';
 
 @Component({
   selector: 'app-main-dish',
@@ -10,19 +11,17 @@ import {map} from 'rxjs/operators';
 })
 export class MainDishComponent {
 
-  @Output() selectedDishChange = new EventEmitter<Dish>();
-
   dishes: Observable<Dish[]>;
-  selectedMainDish: Dish;
+  selectedMainDish: Observable<Dish | undefined>;
 
-  constructor(dishService: DishService) {
+  constructor(dishService: CachedDishService, private wizardService: WizardService) {
     this.dishes = dishService.getDishes().pipe(
       map(dishes => dishes.filter(dish => dish.type === 'main'))
     );
+    this.selectedMainDish = this.wizardService.getMainDish();
   }
 
   onSelectedDishChange(dish: Dish): void {
-    this.selectedMainDish = dish;
-    this.selectedDishChange.emit(dish);
+    this.wizardService.setMainDish(dish);
   }
 }

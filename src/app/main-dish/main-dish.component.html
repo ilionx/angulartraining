@@ -2,7 +2,7 @@
 
 <app-dish-form [dishes]="dishes | async" (selectedDishChange)="onSelectedDishChange($event)"></app-dish-form>
 
-<ng-container *ngIf="selectedMainDish">
+<ng-container *ngIf="(selectedMainDish | async) as selectedMainDish">
   <p>Je hebt gekozen voor: {{ selectedMainDish.name }}</p>
   <p>Totaalprijs: {{selectedMainDish.price}} </p>
   <p><a routerLink="/dessert">Kies een nagerecht</a></p>
