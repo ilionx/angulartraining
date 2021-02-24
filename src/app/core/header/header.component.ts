@@ -1,4 +1,6 @@
-import {Component, Input} from '@angular/core';
+import {Component} from '@angular/core';
+import {WizardService} from '../../shared/service/wizard.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -7,6 +9,10 @@ import {Component, Input} from '@angular/core';
 })
 export class HeaderComponent {
 
-  @Input() totalPrice = 0;
+  totalPrice: Observable<number>;
+
+  constructor(wizardService: WizardService) {
+    this.totalPrice = wizardService.getTotalPrice();
+  }
 
 }

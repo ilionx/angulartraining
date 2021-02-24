@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {Dish} from './shared/model/dish';
 
 @Component({
   selector: 'app-root',
@@ -7,9 +6,4 @@ import {Dish} from './shared/model/dish';
 })
 export class AppComponent {
 
-  selectedMainDish: Dish;
-
-  onSelectedDishChange(dish: Dish): void {
-    this.selectedMainDish = dish;
-  }
 }

@@ -1,8 +1,9 @@
 import {Component} from '@angular/core';
 import {Dish} from '../shared/model/dish';
 import {Observable} from 'rxjs';
-import {DishService} from '../shared/service/dish.service';
 import {map} from 'rxjs/operators';
+import {WizardService} from '../shared/service/wizard.service';
+import {CachedDishService} from '../shared/service/cached-dish.service';
 
 @Component({
   selector: 'app-dessert',
@@ -11,17 +12,20 @@ import {map} from 'rxjs/operators';
 export class DessertComponent {
 
   desserts: Observable<Dish[]>;
-  selectedMainDish: Dish;
-  selectedDessert: Dish;
-  totalPrice: number;
+  selectedMainDish: Observable<Dish | undefined>;
+  selectedDessert: Observable<Dish | undefined>;
+  totalPrice: Observable<number>;
 
-  constructor(dishService: DishService) {
+  constructor(dishService: CachedDishService, private wizardService: WizardService) {
     this.desserts = dishService.getDishes().pipe(
       map(dishes => dishes.filter(dish => dish.type === 'dessert'))
     );
+    this.selectedMainDish = this.wizardService.getMainDish();
+    this.selectedDessert = this.wizardService.getDessert();
+    this.totalPrice = this.wizardService.getTotalPrice();
   }
 
   onSelectedDishChange(dish: Dish): void {
-    this.selectedDessert = dish;
+    this.wizardService.setDessert(dish);
   }
 }
