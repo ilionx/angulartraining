@@ -1,0 +1,30 @@
+<h1>Bezorging</h1>
+
+Op welk adres moeten we je gerechten bezorgen?
+
+<form class="addressform" [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
+  <p *ngIf="name.touched && name.invalid">
+    Naam is een verplicht veld.
+  </p>
+  <p>
+    <label for="name">Naam:</label>
+    <input id="name" formControlName="name">
+  </p>
+  <p *ngIf="zipCode.touched && zipCode.invalid">
+    Postcode bestaat uit vier cijfers en twee letters.
+  </p>
+  <p>
+    <label for="zipCode">Postcode:</label>
+    <input id="zipCode" formControlName="zipCode">
+  </p>
+  <p *ngIf="zipCode.touched && number.touched && deliveryForm.hasError('requiredForZipcode')">
+    Huisnummer is verplicht voor deze postcode.
+  </p>
+  <p>
+    <label for="number">Huisnummer:</label>
+    <input id="number" formControlName="number">
+  </p>
+  <p>
+    <input [disabled]="deliveryForm.valid ? undefined : 'disabled'" type="submit" value="Bestellen">
+  </p>
+</form>

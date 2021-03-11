@@ -1,0 +1,11 @@
+.addressform {
+
+  label {
+    width: 8rem;
+    display: inline-block;
+  }
+
+  input.ng-touched.ng-invalid {
+    border-color: red;
+  }
+}
